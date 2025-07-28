@@ -22,9 +22,6 @@
     <label>Annual Income (k$):</label>
     <input type="number" id="income" placeholder="Enter income" min="0" />
 
-    <label>Spending Score (1-100):</label>
-    <input type="number" id="score" placeholder="Enter spending score" min="0" max="100" />
-
     <button onclick="predict()">Predict Cluster</button>
 
     <div id="result"></div>
@@ -32,17 +29,19 @@
 
   <script>
     function predict() {
-      const age = Number(document.getElementById('age').value);
-      const income = Number(document.getElementById('income').value);
-      const score = Number(document.getElementById('score').value);
+      const gender = document.getElementById('gender').value;
+      const age = parseInt(document.getElementById('age').value);
+      const income = parseInt(document.getElementById('income').value);
 
-      if (!age || !income || !score) {
-        alert('Please fill in all fields.');
+      if (!gender || isNaN(age) || isNaN(income)) {
+        alert("Please fill in all fields.");
         return;
       }
 
       const payload = {
-        features: [age, income, score]
+        gender: gender,
+        age: age,
+        income: income
       };
 
       fetch("https://customer-r-3.onrender.com/predict", {
@@ -52,16 +51,19 @@
         },
         body: JSON.stringify(payload)
       })
-        .then((response) => response.json())
-        .then((data) => {
-          const resultBox = document.getElementById("result");
-          resultBox.style.display = "block";
-          resultBox.innerText = `Predicted Customer Segment: Cluster ${data.cluster}`;
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Prediction failed. Is Flask running?");
-        });
+      .then((response) => response.json())
+      .then((data) => {
+        const resultBox = document.getElementById("result");
+        resultBox.style.display = "block";
+        resultBox.innerHTML = `
+          <strong>Predicted Cluster:</strong> ${data.cluster} <br>
+          <strong>Segment Insight:</strong> ${data.message}
+        `;
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Prediction failed. Is the backend running?");
+      });
     }
   </script>
 </body>
