@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Segmentation</title>
+  <link rel="stylesheet" href="styl1.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Customer Segmentation</h1>
+    <form id="prediction-form">
+      <label for="gender">Gender:</label>
+      <select id="gender" name="gender" required>
+        <option value="">Select</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" required min="1" />
+
+      <label for="income">Annual Income (k$):</label>
+      <input type="number" id="income" name="income" required min="1" />
+
+      <button type="submit">Predict Segment</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    document.getElementById("prediction-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const gender = document.getElementById("gender").value;
+      const age = parseInt(document.getElementById("age").value);
+      const income = parseInt(document.getElementById("income").value);
+
+      const response = await fetch("https://customer-r-3.onrender.com/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ gender, age, income }),
+      });
+
+      const data = await response.json();
+      const resultDiv = document.getElementById("result");
+
+      if (response.ok) {
+        resultDiv.innerHTML = `
+          <h2>Prediction Result</h2>
+          <p><strong>Cluster:</strong> ${data.cluster}</p>
+          <p><strong>Group Insight:</strong> ${data.message}</p>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p style="color:red;">Prediction failed: ${data.error || "Server error"}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
