@@ -6,10 +6,10 @@ import numpy as np
 app = Flask(__name__)
 CORS(app)
 
-# Load your trained model
+# Load your trained clustering model
 model = joblib.load("model.pkl")
 
-# Example: Mapping clusters to insight messages
+# Mapping of cluster to business insight
 cluster_messages = {
     0: "Low income, younger group — may need cost-effective offers.",
     1: "Average income, moderate spenders — open to upselling.",
@@ -23,42 +23,23 @@ def home():
     return "Customer Segmentation API is running!"
 
 @app.route("/predict", methods=["POST"])
-function predict() {
-  const gender = document.getElementById('gender').value;
-  const age = Number(document.getElementById('age').value);
-  const income = Number(document.getElementById('income').value);
-  const score = Number(document.getElementById('score').value); // Optional if not used in backend
+def predict():
+    data = request.get_json()
 
-  if (!gender || !age || !income || !score) {
-    alert('Please fill in all fields.');
-    return;
-  }
+    # Convert gender to numerical format (0 for Male, 1 for Female)
+    gender = 0 if data['gender'].lower() == "male" else 1
+    age = data['age']
+    income = data['income']
+    score = data.get('score', 50)  # Default score if not passed
 
-  const payload = {
-    gender: gender,
-    age: age,
-    income: income
-  };
+    # Format input as required by model
+    input_data = np.array([[gender, age, income, score]])
 
-  fetch("https://customer-r-3.onrender.com/predict", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(payload)
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const resultBox = document.getElementById("result");
-      resultBox.style.display = "block";
-      resultBox.innerText = `Predicted Customer Segment: Cluster ${data.cluster}\n${data.message}`;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      alert("Prediction failed. Is Flask running?");
-    });
-}
+    # Predict cluster
+    cluster = int(model.predict(input_data)[0])
+    message = cluster_messages.get(cluster, "No description available.")
 
+    return jsonify({"cluster": cluster, "message": message})
 
 if __name__ == "__main__":
     app.run(debug=True)
