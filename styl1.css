@@ -1,30 +1,31 @@
-/* Global reset and dark theme base */
+/* Base setup with light greenish background */
 body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: rgb(30, 30, 30); /* Dark background */
-  color: rgb(240, 240, 240); /* Light text */
+  background-color: rgb(220, 255, 230); /* very light minty green */
+  color: rgb(34, 34, 34); /* dark text for contrast */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-/* Container styling */
+/* Card container with a soft green tone */
 .container {
-  background-color: rgb(43, 43, 43); /* Slightly lighter dark background */
+  background-color: rgb(245, 255, 250); /* near-white with green hint */
   padding: 30px 40px;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 15px rgba(120, 200, 140, 0.3);
   width: 350px;
   text-align: center;
+  border: 1px solid rgb(190, 240, 210);
 }
 
 /* Heading */
 .container h2 {
   margin-bottom: 20px;
-  color: rgb(0, 230, 230); /* Cyan heading */
+  color: rgb(0, 150, 90); /* strong green */
 }
 
 /* Input labels */
@@ -32,25 +33,26 @@ label {
   display: block;
   margin: 15px 0 5px;
   font-weight: bold;
-  color: rgb(204, 204, 204); /* Medium-light gray */
+  color: rgb(50, 90, 60); /* dark olive green */
 }
 
-/* Inputs and select dropdown */
+/* Inputs and dropdowns */
 input, select {
   width: 100%;
   padding: 10px;
-  border: 1px solid rgb(68, 68, 68); /* Border dark gray */
+  border: 1px solid rgb(180, 230, 200);
   border-radius: 8px;
-  background-color: rgb(58, 58, 58); /* Input field background */
-  color: rgb(255, 255, 255); /* Input text */
+  background-color: rgb(255, 255, 255); /* pure white inputs */
+  color: rgb(34, 34, 34);
   font-size: 14px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
-/* Button */
+/* Button styling */
 button {
   margin-top: 20px;
   padding: 12px;
-  background-color: rgb(0, 188, 212); /* Teal/Cyan button */
+  background-color: rgb(0, 190, 120); /* vibrant green */
   border: none;
   color: rgb(255, 255, 255);
   font-weight: bold;
@@ -61,16 +63,16 @@ button {
 }
 
 button:hover {
-  background-color: rgb(0, 151, 167); /* Slightly darker on hover */
+  background-color: rgb(0, 160, 100); /* darker on hover */
 }
 
-/* Result and description */
+/* Result box */
 #result, #description {
   margin-top: 20px;
   font-size: 15px;
-  color: rgb(255, 255, 255);
-  background-color: rgb(51, 51, 51); /* Result background */
+  color: rgb(30, 30, 30);
+  background-color: rgb(235, 255, 240); /* pale mint background */
   padding: 15px;
   border-radius: 8px;
-  border: 1px solid rgb(85, 85, 85); /* Border for result box */
+  border: 1px solid rgb(170, 220, 180);
 }
