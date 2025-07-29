@@ -3,8 +3,8 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #1e1e1e;
-  color: #f0f0f0;
+  background-color: rgb(30, 30, 30); /* Dark background */
+  color: rgb(240, 240, 240); /* Light text */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,10 +13,10 @@ body {
 
 /* Container styling */
 .container {
-  background-color: #2b2b2b;
+  background-color: rgb(43, 43, 43); /* Slightly lighter dark background */
   padding: 30px 40px;
   border-radius: 15px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   width: 350px;
   text-align: center;
 }
@@ -24,7 +24,7 @@ body {
 /* Heading */
 .container h2 {
   margin-bottom: 20px;
-  color: #00e6e6;
+  color: rgb(0, 230, 230); /* Cyan heading */
 }
 
 /* Input labels */
@@ -32,17 +32,17 @@ label {
   display: block;
   margin: 15px 0 5px;
   font-weight: bold;
-  color: #cccccc;
+  color: rgb(204, 204, 204); /* Medium-light gray */
 }
 
 /* Inputs and select dropdown */
 input, select {
   width: 100%;
   padding: 10px;
-  border: 1px solid #444;
+  border: 1px solid rgb(68, 68, 68); /* Border dark gray */
   border-radius: 8px;
-  background-color: #3a3a3a;
-  color: #fff;
+  background-color: rgb(58, 58, 58); /* Input field background */
+  color: rgb(255, 255, 255); /* Input text */
   font-size: 14px;
 }
 
@@ -50,9 +50,9 @@ input, select {
 button {
   margin-top: 20px;
   padding: 12px;
-  background-color: #00bcd4;
+  background-color: rgb(0, 188, 212); /* Teal/Cyan button */
   border: none;
-  color: #fff;
+  color: rgb(255, 255, 255);
   font-weight: bold;
   width: 100%;
   border-radius: 8px;
@@ -61,16 +61,16 @@ button {
 }
 
 button:hover {
-  background-color: #0097a7;
+  background-color: rgb(0, 151, 167); /* Slightly darker on hover */
 }
 
 /* Result and description */
 #result, #description {
   margin-top: 20px;
   font-size: 15px;
-  color: #ffffff;
-  background-color: #333;
+  color: rgb(255, 255, 255);
+  background-color: rgb(51, 51, 51); /* Result background */
   padding: 15px;
   border-radius: 8px;
-  border: 1px solid #555;
+  border: 1px solid rgb(85, 85, 85); /* Border for result box */
 }
