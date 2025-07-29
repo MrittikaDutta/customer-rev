@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Customer Segmentation</title>
-  <link rel="stylesheet" href="styl1.css" />
+  <link rel="stylesheet" href="styl1.css">
 </head>
 <body>
   <div class="container">
@@ -17,20 +17,52 @@
     </select>
 
     <label>Age:</label>
-    <input type="number" id="age" />
+    <input type="number" id="age" placeholder="Enter age" min="1" />
 
     <label>Annual Income (k$):</label>
-    <input type="number" id="income" />
+    <input type="number" id="income" placeholder="Enter income" min="0" />
 
     <label>Spending Score (1-100):</label>
-    <input type="number" id="score" />
+    <input type="number" id="score" placeholder="Enter spending score" min="0" max="100" />
 
-    <button onclick="predictCluster()">Predict Cluster</button>
+    <button onclick="predict()">Predict Cluster</button>
 
-    <div id="result" class="result-box"></div>
-    <div id="description" class="description-box"></div>
+    <div id="result"></div>
   </div>
 
-  <script src="script.js"></script>
+  <script>
+    function predict() {
+      const age = Number(document.getElementById('age').value);
+      const income = Number(document.getElementById('income').value);
+      const score = Number(document.getElementById('score').value);
+
+      if (!age || !income || !score) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      const payload = {
+        features: [age, income, score]
+      };
+
+      fetch("https://customer-r-3.onrender.com/predict", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const resultBox = document.getElementById("result");
+          resultBox.style.display = "block";
+          resultBox.innerText = `Predicted Customer Segment: Cluster ${data.cluster}`;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Prediction failed. Is Flask running?");
+        });
+    }
+  </script>
 </body>
 </html>
