@@ -5,6 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Customer Segmentation</title>
   <link rel="stylesheet" href="styl1.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f9fc;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 6px;
+      background-color: #e9f7ef;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: none;
+      white-space: pre-wrap;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -32,17 +93,20 @@
 
   <script>
     function predict() {
+      const gender = document.getElementById('gender').value;
       const age = Number(document.getElementById('age').value);
       const income = Number(document.getElementById('income').value);
-      const score = Number(document.getElementById('score').value);
+      const score = Number(document.getElementById('score').value); // Optional
 
-      if (!age || !income || !score) {
+      if (!gender || !age || !income || !score) {
         alert('Please fill in all fields.');
         return;
       }
 
       const payload = {
-        features: [age, income, score]
+        gender: gender,
+        age: age,
+        income: income
       };
 
       fetch("https://customer-r-3.onrender.com/predict", {
@@ -56,11 +120,11 @@
         .then((data) => {
           const resultBox = document.getElementById("result");
           resultBox.style.display = "block";
-          resultBox.innerText = `Predicted Customer Segment: Cluster ${data.cluster}`;
+          resultBox.innerText = `Predicted Customer Segment: Cluster ${data.cluster}\n\n${data.message}`;
         })
         .catch((error) => {
           console.error("Error:", error);
-          alert("Prediction failed. Is Flask running?");
+          alert("Prediction failed. Is the backend running?");
         });
     }
   </script>
