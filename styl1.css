@@ -1,98 +1,76 @@
-/* Reset some default styles */
-* {
+/* Global reset and dark theme base */
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  background-color: #f0f2f5;
+  background-color: #1e1e1e;
+  color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 /* Container styling */
 .container {
-  background-color: #fff;
+  background-color: #2b2b2b;
   padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  width: 350px;
+  text-align: center;
 }
 
 /* Heading */
 .container h2 {
-  text-align: center;
-  margin-bottom: 25px;
-  color: #333;
+  margin-bottom: 20px;
+  color: #00e6e6;
 }
 
-/* Labels */
+/* Input labels */
 label {
   display: block;
-  margin-top: 15px;
-  font-weight: 500;
-  color: #555;
+  margin: 15px 0 5px;
+  font-weight: bold;
+  color: #cccccc;
 }
 
-/* Input and select styles */
-input[type="number"],
-select {
+/* Inputs and select dropdown */
+input, select {
   width: 100%;
-  padding: 10px 12px;
-  margin-top: 6px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #3a3a3a;
+  color: #fff;
   font-size: 14px;
-  transition: border-color 0.3s;
-}
-
-input[type="number"]:focus,
-select:focus {
-  outline: none;
-  border-color: #4CAF50;
 }
 
 /* Button */
 button {
-  width: 100%;
   margin-top: 20px;
   padding: 12px;
-  background-color: #4CAF50;
-  color: white;
-  font-weight: bold;
-  font-size: 16px;
+  background-color: #00bcd4;
   border: none;
-  border-radius: 6px;
+  color: #fff;
+  font-weight: bold;
+  width: 100%;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #0097a7;
 }
 
-/* Result and Description boxes */
-.result-box,
-.description-box {
-  margin-top: 15px;
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 14.5px;
-  line-height: 1.4;
-}
-
-.result-box {
-  background-color: #d4fdd4;
-  font-weight: bold;
-  color: #2e7d32;
-}
-
-.description-box {
-  background-color: #e8f0fe;
-  color: #1a237e;
+/* Result and description */
+#result, #description {
+  margin-top: 20px;
+  font-size: 15px;
+  color: #ffffff;
+  background-color: #333;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #555;
 }
