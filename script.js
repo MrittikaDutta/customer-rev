@@ -1,17 +1,10 @@
-const descriptions = {
-  0: "Low income, younger group — may need cost-effective offers.",
-  1: "Average income, moderate spenders — open to upselling.",
-  2: "High income, high spenders — premium products recommended.",
-  3: "High income, low spenders — attract with luxury offers.",
-  4: "Young high spenders — very responsive to trends."
-};
-
 async function predictCluster() {
   const gender = document.getElementById("gender").value;
   const age = Number(document.getElementById("age").value);
   const income = Number(document.getElementById("income").value);
   const score = Number(document.getElementById("score").value);
 
+  // Validate input
   if (!gender || !age || !income || !score) {
     alert("Please fill in all fields.");
     return;
@@ -35,13 +28,22 @@ async function predictCluster() {
 
     const data = await response.json();
 
-    document.getElementById("result").innerText =
-      "Predicted Customer Segment: Cluster " + data.cluster;
+    // Debug log to inspect the full response
+    console.log("Response from backend:", data);
 
-    document.getElementById("description").innerText = data.message;
+    // Show result and message
+    const cluster = data.cluster;
+    const message = data.message;
+
+    document.getElementById("result").innerText =
+      `Predicted Customer Segment: Cluster ${cluster}`;
+    document.getElementById("description").innerText =
+      message || "No description available.";
 
   } catch (error) {
-    console.error("Error:", error);
-    alert("Prediction failed. Try again later.");
+    console.error("Prediction error:", error);
+    document.getElementById("result").innerText = "Error predicting cluster.";
+    document.getElementById("description").innerText = "";
   }
 }
+
