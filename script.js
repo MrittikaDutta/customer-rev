@@ -4,7 +4,6 @@ async function predictCluster() {
   const income = Number(document.getElementById("income").value);
   const score = Number(document.getElementById("score").value);
 
-  // Validate input
   if (!gender || !age || !income || !score) {
     alert("Please fill in all fields.");
     return;
@@ -28,22 +27,26 @@ async function predictCluster() {
 
     const data = await response.json();
 
-    // Debug log to inspect the full response
-    console.log("Response from backend:", data);
+    console.log("✅ Full Response from Backend:", data);
 
-    // Show result and message
+    if (!("cluster" in data)) {
+      console.error("❌ 'cluster' not in response");
+    }
+    if (!("message" in data)) {
+      console.error("❌ 'message' not in response");
+    }
+
     const cluster = data.cluster;
     const message = data.message;
 
     document.getElementById("result").innerText =
-      `Predicted Customer Segment: Cluster ${cluster}`;
+      `Predicted Customer Segment: Cluster ${cluster ?? "?"}`;
     document.getElementById("description").innerText =
-      message || "No description available.";
+      message ?? "No description available.";
 
   } catch (error) {
-    console.error("Prediction error:", error);
+    console.error("🚨 Network or Server Error:", error);
     document.getElementById("result").innerText = "Error predicting cluster.";
     document.getElementById("description").innerText = "";
   }
 }
-
