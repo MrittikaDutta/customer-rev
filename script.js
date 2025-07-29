@@ -8,35 +8,40 @@ const descriptions = {
 
 async function predictCluster() {
   const gender = document.getElementById("gender").value;
-  const age = document.getElementById("age").value;
-  const income = document.getElementById("income").value;
-  const score = document.getElementById("score").value;
+  const age = Number(document.getElementById("age").value);
+  const income = Number(document.getElementById("income").value);
+  const score = Number(document.getElementById("score").value);
+
+  if (!gender || !age || !income || !score) {
+    alert("Please fill in all fields.");
+    return;
+  }
 
   const payload = {
     gender: gender,
-    age: parseInt(age),
-    income: parseFloat(income),
-    score: parseFloat(score)
+    age: age,
+    income: income,
+    score: score
   };
 
   try {
-    const response = await fetch('/predict', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("https://customer-r-3.onrender.com/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify(payload)
     });
 
     const data = await response.json();
-    const cluster = data.cluster;
 
     document.getElementById("result").innerText =
-      "Predicted Customer Segment: Cluster " + cluster;
-    document.getElementById("description").innerText =
-      descriptions[cluster] || "No description available.";
+      "Predicted Customer Segment: Cluster " + data.cluster;
+
+    document.getElementById("description").innerText = data.message;
 
   } catch (error) {
-    document.getElementById("result").innerText = "Error predicting cluster.";
-    document.getElementById("description").innerText = "";
-    console.error("Prediction error:", error);
+    console.error("Error:", error);
+    alert("Prediction failed. Try again later.");
   }
 }
