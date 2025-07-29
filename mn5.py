@@ -23,22 +23,42 @@ def home():
     return "Customer Segmentation API is running!"
 
 @app.route("/predict", methods=["POST"])
-def predict():
-    data = request.get_json()
-    gender = data.get("gender")
-    age = data.get("age")
-    income = data.get("income")
+function predict() {
+  const gender = document.getElementById('gender').value;
+  const age = Number(document.getElementById('age').value);
+  const income = Number(document.getElementById('income').value);
+  const score = Number(document.getElementById('score').value); // Optional if not used in backend
 
-    if gender not in ["Male", "Female"] or not isinstance(age, int) or not isinstance(income, int):
-        return jsonify({"error": "Invalid input"}), 400
+  if (!gender || !age || !income || !score) {
+    alert('Please fill in all fields.');
+    return;
+  }
 
-    gender_numeric = 1 if gender == "Male" else 0
-    input_data = np.array([[gender_numeric, age, income]])
-    
-    cluster = int(model.predict(input_data)[0])
-    message = cluster_messages.get(cluster, "Segment description not available.")
+  const payload = {
+    gender: gender,
+    age: age,
+    income: income
+  };
 
-    return jsonify({"cluster": cluster, "message": message})
+  fetch("https://customer-r-3.onrender.com/predict", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const resultBox = document.getElementById("result");
+      resultBox.style.display = "block";
+      resultBox.innerText = `Predicted Customer Segment: Cluster ${data.cluster}\n${data.message}`;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Prediction failed. Is Flask running?");
+    });
+}
+
 
 if __name__ == "__main__":
     app.run(debug=True)
